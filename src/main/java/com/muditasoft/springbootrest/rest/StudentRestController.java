@@ -3,6 +3,7 @@ package com.muditasoft.springbootrest.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,5 +58,18 @@ public class StudentRestController {
 	public Student updateStudent(@RequestBody Student student) {
 		studentService.saveOrUpdate(student);
 		return student;
+	}
+	
+	// add mapping for DELETE /students/{id} -  delete student
+	@DeleteMapping("/students/{id}")
+	public String deleteStudent(@PathVariable(name = "id") Long id) {
+		Student student = studentService.findById(id);
+		
+		if(student == null)
+			throw new RuntimeException("Student id not found - " + id);
+		
+		studentService.deleteById(id);
+		
+		return "Deleted student id - " + id;
 	}
 }
