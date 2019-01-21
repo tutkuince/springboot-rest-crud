@@ -50,5 +50,23 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 
+	@Override
+	public void saveOrUpdate(Student student) {
+		Session session = entityManager.unwrap(Session.class);
+		session.saveOrUpdate(student);
+	}
+
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void deleteById(Long id) {
+		Session session = entityManager.unwrap(Session.class);
+		
+		Query query = session.createQuery("delete from Student where id=:studentId");
+		query.setParameter("studentId", id);
+		query.executeUpdate();
+	}
+
+
 	
 }
