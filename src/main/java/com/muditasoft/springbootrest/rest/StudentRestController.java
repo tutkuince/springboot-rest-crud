@@ -46,10 +46,6 @@ public class StudentRestController {
 	
 	@PostMapping("/students")
 	public Student addStudent(@RequestBody Student student) {
-		// also just in case they pass an id in JSON . . . set id to 0
-		// this is to force a save of new item . . . instead of update
-		
-		student.setId(0L);
 		studentService.saveOrUpdate(student);
 		return student;
 	}
