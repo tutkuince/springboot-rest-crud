@@ -34,4 +34,20 @@ public class StudentServiceImpl implements StudentService {
 	public Student findById(Long id) {
 		return studentDao.findById(id);
 	}
+
+
+
+	@Override
+	@Transactional
+	public void saveOrUpdate(Student student) {
+		studentDao.saveOrUpdate(student);
+	}
+
+
+
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		studentDao.deleteById(id);
+	}
 }
