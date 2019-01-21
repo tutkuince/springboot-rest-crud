@@ -43,5 +43,12 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 
+	@Override
+	public Student findById(Long id) {
+		Session session = entityManager.unwrap(Session.class);
+		return session.get(Student.class, id);
+	}
+
+
 	
 }
