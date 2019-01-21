@@ -51,10 +51,8 @@ public class StudentDaoJpaImpl implements StudentDao {
 
 	@Override
 	public void deleteById(Long id) {
-		Student student = findById(id);
-		
 		Query query = entityManager.createQuery("delete from Student where id=:studentId");
-		query.setParameter("studentId", student.getId());
+		query.setParameter("studentId", id);
 		
 		query.executeUpdate();
 	}
