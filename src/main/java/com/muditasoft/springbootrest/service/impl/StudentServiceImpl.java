@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.muditasoft.springbootrest.dao.StudentDao;
@@ -17,7 +18,7 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao studentDao;
 	
 	@Autowired
-	public StudentServiceImpl(StudentDao studentDao) {
+	public StudentServiceImpl(@Qualifier("studentDaoJpaImpl")StudentDao studentDao) {
 		this.studentDao = studentDao;
 	}
 
