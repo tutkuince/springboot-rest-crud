@@ -28,4 +28,10 @@ public class StudentServiceImpl implements StudentService {
 	public List<Student> findAll() {
 		return studentDao.findAll();
 	}
+	
+	@Override
+	@Transactional
+	public Student findById(Long id) {
+		return studentDao.findById(id);
+	}
 }

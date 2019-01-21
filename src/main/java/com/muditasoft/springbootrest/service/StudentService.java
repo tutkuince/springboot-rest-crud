@@ -6,4 +6,5 @@ import com.muditasoft.springbootrest.model.Student;
 
 public interface StudentService {
 	List<Student> findAll();
+	Student findById(Long id);
 }
