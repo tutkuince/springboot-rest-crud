@@ -1,54 +1,60 @@
 package com.muditasoft.springbootrest.service.impl;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.muditasoft.springbootrest.dao.StudentDao;
+import com.muditasoft.springbootrest.dao.StudentRepository;
 import com.muditasoft.springbootrest.model.Student;
 import com.muditasoft.springbootrest.service.StudentService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-	
-	private StudentDao studentDao;
-	
+
+//	private StudentDao studentDao;
+//	
+//	@Autowired
+//	public StudentServiceImpl(@Qualifier("studentDaoJpaImpl")StudentDao studentDao) {
+//		this.studentDao = studentDao;
+//	}
+
+	private StudentRepository studentRepository;
+
 	@Autowired
-	public StudentServiceImpl(@Qualifier("studentDaoJpaImpl")StudentDao studentDao) {
-		this.studentDao = studentDao;
+	public StudentServiceImpl(StudentRepository studentRepository) {
+		this.studentRepository = studentRepository;
 	}
 
-
-
+	// Remove @Transactional since JpaRepository provides this functionality
 	@Override
-	@Transactional
 	public List<Student> findAll() {
-		return studentDao.findAll();
+		return studentRepository.findAll();
 	}
-	
+
 	@Override
-	@Transactional
 	public Student findById(Long id) {
-		return studentDao.findById(id);
+		Optional<Student> result = studentRepository.findById(id);
+
+		Student student = null;
+
+		if (result.isPresent()) {
+			student = result.get();
+		} else {
+			throw new RuntimeException("Did not find student id - " + id);
+		}
+
+		return student;
 	}
 
-
-
 	@Override
-	@Transactional
 	public void saveOrUpdate(Student student) {
-		studentDao.saveOrUpdate(student);
+		studentRepository.save(student);
 	}
 
-
-
 	@Override
-	@Transactional
 	public void deleteById(Long id) {
-		studentDao.deleteById(id);
+		studentRepository.deleteById(id);
 	}
 }
