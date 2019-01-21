@@ -36,20 +36,27 @@ public class StudentDaoJpaImpl implements StudentDao {
 
 	@Override
 	public Student findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Student student = entityManager.find(Student.class, id);
+		return student;
 	}
 
 	@Override
 	public void saveOrUpdate(Student student) {
-		// TODO Auto-generated method stub
-
+		// save or update the student
+		Student std = entityManager.merge(student);
+		
+		// update with id from db so we can get generated id for save/insert student
+		student.setId(std.getId());
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
-
+		Student student = findById(id);
+		
+		Query query = entityManager.createQuery("delete from Student where id=:studentId");
+		query.setParameter("studentId", student.getId());
+		
+		query.executeUpdate();
 	}
 
 }
