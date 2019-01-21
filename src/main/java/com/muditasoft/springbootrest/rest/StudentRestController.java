@@ -31,8 +31,14 @@ public class StudentRestController {
 		return studentService.findAll();
 	}
 	
+	// Add mapping for Get /students/{id}
 	@GetMapping("/students/{id}")
 	public Student getStudentById(@PathVariable(name = "id") Long id) {
-		return studentService.findById(id);
+		Student student = studentService.findById(id);
+		
+		if(student == null)
+			throw new RuntimeException("Student id not found - " + id);
+		
+		return student;
 	}
 }
